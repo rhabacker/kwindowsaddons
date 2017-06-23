@@ -27,7 +27,9 @@ find_package(KF5 REQUIRED COMPONENTS
 
 ecm_optional_add_subdirectory( kwinshutdown )
 ecm_optional_add_subdirectory( kwinstartmenu )
-ecm_optional_add_subdirectory( config )
+if(WINDRES_EXECUTABLE)
+    ecm_optional_add_subdirectory( config )
+endif()
 ecm_optional_add_subdirectory( contextmenu )
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
