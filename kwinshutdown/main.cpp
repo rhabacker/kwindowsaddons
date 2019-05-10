@@ -19,9 +19,12 @@
 */
 
 
-#include <kdebug.h>
-#include <KAboutData>
-#include <Kapplication>
+// prevent including of <kaboutdata.h>
+#define KABOUTDATA_H
+#include <K4AboutData>
+#define KAboutData K4AboutData
+#include <KApplication>
+#include <KCrash>
 #include <KMessageBox>
 #include <KCmdLineArgs>
 #include <KGlobal>
