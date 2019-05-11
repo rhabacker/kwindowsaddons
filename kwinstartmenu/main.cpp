@@ -23,11 +23,15 @@
 #include <QFile>
 #include <QFileInfo>
 
-#include <KAboutData>
+// prevent including of <kaboutdata.h>
+#define KABOUTDATA_H
+#include <K4AboutData>
+#define KAboutData K4AboutData
 #include <kapplication.h>
 #include <kcmdlineargs.h>
 #include <kconfig.h>
 #include <kcomponentdata.h>
+#include <kdeversion.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>

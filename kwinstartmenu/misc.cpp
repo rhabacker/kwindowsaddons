@@ -148,7 +148,7 @@ KServiceGroup::Ptr findGroup(const QString &relPath)
         bool found = false;
         foreach (const KSycocaEntry::Ptr &e, tmp->entries(true, true)) {
             if (e->isType(KST_KServiceGroup)) {
-                KServiceGroup::Ptr g(KServiceGroup::Ptr::staticCast(e));
+                const KServiceGroup *g = static_cast<const KServiceGroup *>(e);
                 if ((g->caption()==rest.front()) || (g->name()==alreadyFound+rest.front())) {
                 kDebug() << "Found group with caption " << g->caption()
                       << " with real name: " << g->name() << endl;
@@ -188,9 +188,9 @@ bool generateMenuEntries(QList<LinkFile> &files, const KUrl &url, const QString 
 
     unsigned int count = 0;
 
-    foreach (const KSycocaEntry::Ptr &e, grp->entries(true, true)) {
+    foreach (KSycocaEntry *e, grp->entries(true, true)) {
         if (e->isType(KST_KServiceGroup)) {
-            KServiceGroup::Ptr g(KServiceGroup::Ptr::staticCast(e));
+            KServiceGroup *g = static_cast<KServiceGroup *>(e);
             // Avoid adding empty groups.
             KServiceGroup::Ptr subMenuRoot = KServiceGroup::group(g->relPath());
             if (subMenuRoot->childCount() == 0)
@@ -204,8 +204,8 @@ bool generateMenuEntries(QList<LinkFile> &files, const KUrl &url, const QString 
             KUrl a = url; 
             a.setPath('/' + relPath);
             generateMenuEntries(files,a,relPathTranslated + '/' + g->caption());
-        } else {
-            KService::Ptr s(KService::Ptr::staticCast(e));
+        } else if (e->isType(KST_KService)) {
+            KService *s = static_cast<KService *>(e);
 
             // read exec attribute
             KDesktopFile df(KStandardDirs::locate("apps", s->entryPath()));
